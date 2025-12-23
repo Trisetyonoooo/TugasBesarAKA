@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 from prettytable import PrettyTable
 import sys
 
-# Menambah batas rekursi agar aman untuk dataset agak besar
 sys.setrecursionlimit(5000)
 
 # =====================================
@@ -53,9 +52,7 @@ def hitung_waktu(data):
 
     return total_i, total_r, waktu_i, waktu_r
 
-# =====================================
-# Fungsi Tampilkan Tabel
-# =====================================
+
 def print_table(n_values, recursive_times, iterative_times, total_recursive, total_iterative):
     table = PrettyTable()
     table.field_names = ["Jumlah Data", "Total Iteratif", "Total Rekursif", "Waktu Iteratif (s)", "Waktu Rekursif (s)"]
@@ -63,9 +60,6 @@ def print_table(n_values, recursive_times, iterative_times, total_recursive, tot
         table.add_row([n_values[i], f"Rp {total_iterative[i]}", f"Rp {total_recursive[i]}", f"{iterative_times[i]:.6f}", f"{recursive_times[i]:.6f}"])
     st.text(str(table))
 
-# =====================================
-# Fungsi Tampilkan Grafik
-# =====================================
 def plot_graph(n_values, recursive_times, iterative_times):
     plt.figure(figsize=(10,6))
     plt.plot(n_values, iterative_times, marker='o', linestyle='-', color='blue', label='Iteratif')
@@ -77,15 +71,11 @@ def plot_graph(n_values, recursive_times, iterative_times):
     plt.grid(True)
     st.pyplot(plt)
 
-# =====================================
-# Streamlit App
-# =====================================
 st.title("Analisis Kompleksitas Algoritma")
 st.subheader("Studi Kasus: Total Pengeluaran Bulanan Mahasiswa")
 st.write("Kelas: IF-12-02")
 st.write("Nama Anggota: Tri Setyono Martyantoro (103112400279) | Rifa Cahya Ariby (103112400268)")
 
-# Pilih ukuran dataset
 st.write("---")
 st.write("Pilih ukuran dataset untuk diuji:")
 dataset_sizes = st.multiselect("Jumlah Data Pengeluaran", [10, 50, 100, 500, 1000, 2000], default=[10, 50, 100, 500, 1000, 2000])
