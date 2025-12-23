@@ -7,9 +7,6 @@ import sys
 
 sys.setrecursionlimit(5000)
 
-# =====================================
-# Fungsi Membuat Data Pengeluaran Mahasiswa
-# =====================================
 def generate_pengeluaran(size, seed=42):
     random.seed(seed)
     return [random.randint(5000, 50000) for _ in range(size)]
@@ -38,9 +35,6 @@ def hitung_waktu(data):
 
     return total_i, total_r, waktu_i, waktu_r
 
-# =====================================
-# Fungsi Tampilkan Tabel (pakai dataframe)
-# =====================================
 def show_table(n_values, total_iterative, total_recursive, iterative_times, recursive_times):
     df = pd.DataFrame({
         "Jumlah Data": n_values,
@@ -51,9 +45,6 @@ def show_table(n_values, total_iterative, total_recursive, iterative_times, recu
     })
     st.dataframe(df, use_container_width=True)
 
-# =====================================
-# Fungsi Tampilkan Grafik
-# =====================================
 def plot_graph(n_values, iterative_times, recursive_times):
     plt.figure(figsize=(10,6))
     plt.plot(n_values, iterative_times, marker='o', linestyle='-', color='blue', label='Iteratif')
@@ -65,9 +56,7 @@ def plot_graph(n_values, iterative_times, recursive_times):
     plt.grid(True)
     st.pyplot(plt)
 
-# =====================================
-# Streamlit App
-# =====================================
+
 st.set_page_config(page_title="Analisis Algoritma Pengeluaran", layout="wide")
 
 st.title("📊 Analisis Kompleksitas Algoritma")
@@ -100,7 +89,6 @@ if start_button and dataset_sizes:
         iterative_times.append(waktu_i)
         recursive_times.append(waktu_r)
 
-    # Layout dua kolom
     col1, col2 = st.columns(2)
     with col1:
         st.write("### 📋 Tabel Hasil Analisis")
