@@ -1,17 +1,23 @@
-import time
+# app.py
+import streamlit as st
 import random
+import time
 import matplotlib.pyplot as plt
+from prettytable import PrettyTable
 import sys
 
-sys.setrecursionlimit(10000)
+# Menambah batas rekursi agar aman untuk dataset agak besar
+sys.setrecursionlimit(5000)
 
 # =====================================
 # Fungsi Membuat Data Pengeluaran Mahasiswa
 # =====================================
-def generate_pengeluaran(size):
+def generate_pengeluaran(size, seed=42):
     """
     Menghasilkan list pengeluaran harian mahasiswa secara acak (Rp 5.000 - 50.000)
+    Dengan seed agar dataset konsisten
     """
+    random.seed(seed)
     return [random.randint(5000, 50000) for _ in range(size)]
 
 # =====================================
@@ -35,58 +41,77 @@ def total_pengeluaran_rekursif(data, index=0):
 # Fungsi Mengukur Waktu Eksekusi
 # =====================================
 def hitung_waktu(data):
-    # Iteratif
     start = time.perf_counter()
-    total_iteratif = total_pengeluaran_iteratif(data)
+    total_i = total_pengeluaran_iteratif(data)
     end = time.perf_counter()
-    waktu_iteratif = end - start
+    waktu_i = end - start
 
-    # Rekursif
     start = time.perf_counter()
-    total_rekursif = total_pengeluaran_rekursif(data)
+    total_r = total_pengeluaran_rekursif(data)
     end = time.perf_counter()
-    waktu_rekursif = end - start
+    waktu_r = end - start
 
-    return total_iteratif, total_rekursif, waktu_iteratif, waktu_rekursif
+    return total_i, total_r, waktu_i, waktu_r
 
 # =====================================
-# Program Utama
+# Fungsi Tampilkan Tabel
 # =====================================
-def main():
-    print("ANALISIS KOMPLEKSITAS ALGORITMA")
-    print("Studi Kasus: Total Pengeluaran Bulanan Mahasiswa\n")
+def print_table(n_values, recursive_times, iterative_times, total_recursive, total_iterative):
+    table = PrettyTable()
+    table.field_names = ["Jumlah Data", "Total Iteratif", "Total Rekursif", "Waktu Iteratif (s)", "Waktu Rekursif (s)"]
+    for i in range(len(n_values)):
+        table.add_row([n_values[i], f"Rp {total_iterative[i]}", f"Rp {total_recursive[i]}", f"{iterative_times[i]:.6f}", f"{recursive_times[i]:.6f}"])
+    st.text(str(table))
 
-    ukuran_data = [10, 50, 100, 500, 1000, 2000]
-    waktu_iteratif_list = []
-    waktu_rekursif_list = []
-
-    for size in ukuran_data:
-        data = generate_pengeluaran(size)
-
-        total_i, total_r, waktu_i, waktu_r = hitung_waktu(data)
-
-        waktu_iteratif_list.append(waktu_i)
-        waktu_rekursif_list.append(waktu_r)
-
-        print(f"Jumlah Data Pengeluaran : {size}")
-        print(f"Total Iteratif  : Rp {total_i}")
-        print(f"Total Rekursif  : Rp {total_r}")
-        print(f"Waktu Iteratif  : {waktu_i:.6f} detik")
-        print(f"Waktu Rekursif  : {waktu_r:.6f} detik\n")
-
-    # =====================================
-    # Grafik Perbandingan Waktu Eksekusi
-    # =====================================
-    plt.figure(figsize=(10, 6))
-    plt.plot(ukuran_data, waktu_iteratif_list, marker='o', linestyle='-', color='blue', label='Iteratif')
-    plt.plot(ukuran_data, waktu_rekursif_list, marker='x', linestyle='--', color='red', label='Rekursif')
-
+# =====================================
+# Fungsi Tampilkan Grafik
+# =====================================
+def plot_graph(n_values, recursive_times, iterative_times):
+    plt.figure(figsize=(10,6))
+    plt.plot(n_values, iterative_times, marker='o', linestyle='-', color='blue', label='Iteratif')
+    plt.plot(n_values, recursive_times, marker='x', linestyle='--', color='red', label='Rekursif')
     plt.xlabel("Jumlah Data Pengeluaran")
     plt.ylabel("Waktu Eksekusi (detik)")
     plt.title("Perbandingan Waktu Eksekusi Algoritma Iteratif vs Rekursif")
     plt.legend()
     plt.grid(True)
-    plt.show()
+    st.pyplot(plt)
 
-if __name__ == "__main__":
-    main()
+# =====================================
+# Streamlit App
+# =====================================
+st.title("Analisis Kompleksitas Algoritma")
+st.subheader("Studi Kasus: Total Pengeluaran Bulanan Mahasiswa")
+st.write("Kelas: IF-12-02")
+st.write("Nama Anggota: Tri Setyono Martyantoro (103112400279) | Rifa Cahya Ariby (103112400268)")
+
+# Pilih ukuran dataset
+st.write("---")
+st.write("Pilih ukuran dataset untuk diuji:")
+dataset_sizes = st.multiselect("Jumlah Data Pengeluaran", [10, 50, 100, 500, 1000, 2000], default=[10, 50, 100, 500, 1000, 2000])
+
+if st.button("Mulai Analisis") and dataset_sizes:
+    n_values = []
+    total_iterative = []
+    total_recursive = []
+    iterative_times = []
+    recursive_times = []
+
+    for size in dataset_sizes:
+        data = generate_pengeluaran(size)
+        total_i, total_r, waktu_i, waktu_r = hitung_waktu(data)
+
+        n_values.append(size)
+        total_iterative.append(total_i)
+        total_recursive.append(total_r)
+        iterative_times.append(waktu_i)
+        recursive_times.append(waktu_r)
+
+    # Tampilkan tabel
+    st.write("### Tabel Hasil Analisis")
+    print_table(n_values, recursive_times, iterative_times, total_recursive, total_iterative)
+
+    # Tampilkan grafik
+    st.write("### Grafik Perbandingan Waktu Eksekusi")
+    plot_graph(n_values, recursive_times, iterative_times)
+
