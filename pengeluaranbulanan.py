@@ -59,7 +59,7 @@ def plot_graph(n_values, iterative_times, recursive_times):
 
 st.set_page_config(page_title="Analisis Algoritma Pengeluaran", layout="wide")
 
-st.title("📊 Analisis Kompleksitas Algoritma")
+st.title("Analisis Kompleksitas Algoritma")
 st.subheader("Studi Kasus: Total Pengeluaran Bulanan Mahasiswa")
 st.write("**Kelas:** IF-12-02")
 st.write("**Nama Anggota:** Tri Setyono Martyantoro (103112400279) | Rifa Cahya Ariby (103112400268)")
