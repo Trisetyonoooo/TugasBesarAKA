@@ -55,7 +55,7 @@ def plot_graph(n_values, iterative_times, recursive_times):
 
 st.set_page_config(page_title="Analisis Algoritma Pengeluaran", layout="wide")
 
-st.markdown("<h1 style='text-align: center; color: #4B8BBE;'>📊 Analisis Kompleksitas Algoritma</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #4B8BBE;'>Analisis Kompleksitas Algoritma</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center; color: #306998;'>Studi Kasus: Total Pengeluaran Bulanan Mahasiswa</h3>", unsafe_allow_html=True)
 st.markdown("---")
 st.markdown("""
