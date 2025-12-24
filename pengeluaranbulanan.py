@@ -64,7 +64,7 @@ dalam menghitung total pengeluaran mahasiswa, menggunakan dua metode: **Iteratif
 Pilih ukuran dataset di sidebar, lalu klik **Mulai Analisis** untuk melihat hasilnya dalam bentuk tabel dan grafik.
 """)
 
-st.markdown("**Kelas:** IF-12-02  \n**Nama Anggota:** Tri Setyono Martyantoro (103112400279) | Rifa Cahya Ariby (103112400268)")
+st.markdown("**Kelas:** IF-12-02  \n**Nama Anggota:** Tri Setyono Martyantoro (103112400279) | Rifa Cahya Ariby (103112400268) | Hakan Ismail Afnan (103112400038)")
 
 st.sidebar.header("⚙️ Pengaturan Dataset")
 dataset_sizes = st.sidebar.multiselect(
