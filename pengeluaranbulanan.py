@@ -7,9 +7,6 @@ import sys
 
 sys.setrecursionlimit(5000)
 
-# =========================================
-# Fungsi utama
-# =========================================
 def generate_pengeluaran(size, seed=42):
     random.seed(seed)
     return [random.randint(5000, 50000) for _ in range(size)]
@@ -56,12 +53,8 @@ def plot_graph(n_values, iterative_times, recursive_times):
     plt.grid(True)
     st.pyplot(plt)
 
-# =========================================
-# Tampilan Streamlit
-# =========================================
 st.set_page_config(page_title="Analisis Algoritma Pengeluaran", layout="wide")
 
-# Header Aplikasi
 st.markdown("<h1 style='text-align: center; color: #4B8BBE;'>📊 Analisis Kompleksitas Algoritma</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center; color: #306998;'>Studi Kasus: Total Pengeluaran Bulanan Mahasiswa</h3>", unsafe_allow_html=True)
 st.markdown("---")
@@ -73,7 +66,6 @@ Pilih ukuran dataset di sidebar, lalu klik **Mulai Analisis** untuk melihat hasi
 
 st.markdown("**Kelas:** IF-12-02  \n**Nama Anggota:** Tri Setyono Martyantoro (103112400279) | Rifa Cahya Ariby (103112400268)")
 
-# Sidebar Pengaturan
 st.sidebar.header("⚙️ Pengaturan Dataset")
 dataset_sizes = st.sidebar.multiselect(
     "Pilih jumlah data pengeluaran:",
@@ -82,7 +74,6 @@ dataset_sizes = st.sidebar.multiselect(
 )
 start_button = st.sidebar.button("▶️ Mulai Analisis")
 
-# Eksekusi Analisis
 if start_button and dataset_sizes:
     n_values = []
     total_iterative = []
