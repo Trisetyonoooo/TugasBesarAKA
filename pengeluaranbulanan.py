@@ -5,12 +5,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import sys
 
-# Mengatur batas maksimum rekursi agar tidak terjadi recursion error
 sys.setrecursionlimit(5000)
 
-# =========================================================
-# Fungsi untuk menghasilkan data pengeluaran secara acak
-# =========================================================
 def generate_pengeluaran(size, seed=42):
     random.seed(seed)
     return [random.randint(5000, 50000) for _ in range(size)]
